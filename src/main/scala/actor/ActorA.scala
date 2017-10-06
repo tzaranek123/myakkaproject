@@ -5,7 +5,7 @@ import akka.actor.{Actor, ActorLogging, Props}
 
 class ActorA extends Actor with ActorLogging {
   override def receive: Receive = {
-    case IncomingMessage(a) => println(s"incoming message=$a")
+    case IncomingMessage(a) => { println(s"incoming message=$a"); sender ! s"got $a" }
   }
 }
 

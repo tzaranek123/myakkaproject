@@ -2,7 +2,7 @@ package actor
 
 import actor.ActorA.IncomingMessage
 import akka.actor.ActorSystem
-import akka.testkit.{ImplicitSender, TestActorRef, TestKit}
+import akka.testkit.{ImplicitSender, TestActorRef, TestKit, TestProbe}
 import org.scalatest.{BeforeAndAfterAll, FlatSpecLike, Matchers}
 
 class ActorASpec extends TestKit(ActorSystem("test-system"))
@@ -16,11 +16,13 @@ class ActorASpec extends TestKit(ActorSystem("test-system"))
     TestKit.shutdownActorSystem(system)
   }
 
-  "actorA" should "return bleh" in {
-    val actorA = TestActorRef(new ActorA)
+  "actorB" should "receive message from actorA" in {
+    val probe = TestProbe()
+    val actorA = TestActorRef(new ActorA(probe.ref))
 
     actorA ! IncomingMessage("bleh")
-    expectMsg("got bleh")
+
+    probe.expectMsg("actorB I got bleh")
   }
 
 }

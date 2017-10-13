@@ -11,6 +11,7 @@ class ActorASpec extends TestKit(ActorSystem("test-system"))
   with BeforeAndAfterAll
   with ImplicitSender {
 
+
   override def afterAll(): Unit = {
     super.afterAll()
     TestKit.shutdownActorSystem(system)

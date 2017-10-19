@@ -1,13 +1,16 @@
 package actor
 
-import actor.ActorA.{SomeClass, IncomingMessage}
+import actor.ActorA.{IncomingMessage, SomeClass}
+import actor.ActorB.IncomingBMessage
 import akka.actor.{Actor, ActorLogging, ActorRef, Props}
 
 class ActorA(actorB: ActorRef)(someClass: SomeClass =  new SomeClass("defaultvalue")) extends Actor with ActorLogging {
 
   override def receive: Receive = {
     case IncomingMessage(a) => log.info(s"forwarding message=$a to actorB")
-                               actorB ! s"actorB I got $a and btw "+someClass.getSomeVal
+                               val responseMsg = s"actorB, I received $a and btw "+someClass.getSomeVal
+                               actorB ! IncomingBMessage(responseMsg)
+                               //actorB ! responseMsg
   }
 }
 

@@ -1,6 +1,6 @@
 package actor
 
-import actor.ActorB.IncomingMessage
+import actor.ActorB.IncomingBMessage
 import akka.actor.ActorSystem
 import akka.testkit.{ImplicitSender, TestActorRef, TestKit}
 import org.scalatest.{BeforeAndAfterAll, FlatSpecLike, Matchers}
@@ -16,11 +16,17 @@ class ActorBSpec extends TestKit(ActorSystem("test-system"))
     TestKit.shutdownActorSystem(system)
   }
 
-  "actorA" should "return bleh" in {
+  "actorB" should "return bleh" in {
     val actorB = TestActorRef(new ActorB)
 
-    actorB ! IncomingMessage("bleh")
+    actorB ! IncomingBMessage("bleh")
     expectMsg("got bleh")
+  }
+
+  "actorB" should "return stringbleh" in {
+    val actorB = TestActorRef(new ActorB)
+
+    actorB ! "stringbleh"
   }
 
 }

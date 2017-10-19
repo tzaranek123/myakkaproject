@@ -21,6 +21,8 @@ object Main extends App {
 
   actorA ! IncomingMessage("aaaa")
   actorA ? IncomingMessage("aaa")
-  actorB ! actor.ActorB.IncomingMessage("bbbbb")
+  actorA ! "some string"
+  actorB ! actor.ActorB.IncomingBMessage("bbbbb")
+  actorB ! actor.ActorB.IncomingBMessage("bbbbb22222")
 
 }

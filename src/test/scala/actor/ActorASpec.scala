@@ -1,6 +1,7 @@
 package actor
 
-import actor.ActorA.{SomeClass, IncomingMessage}
+import actor.ActorA.{IncomingMessage, SomeClass}
+import actor.ActorB.IncomingBMessage
 import akka.actor.ActorSystem
 import akka.testkit.{ImplicitSender, TestActorRef, TestKit, TestProbe}
 import org.scalamock.scalatest.MockFactory
@@ -24,7 +25,7 @@ class ActorASpec extends TestKit(ActorSystem("test-system"))
 
     actorA ! IncomingMessage("bleh")
 
-    probe.expectMsg("actorB I got bleh and btw defaultvalue")
+    probe.expectMsg(IncomingBMessage("actorB, I received bleh and btw defaultvalue"))
 
   }
 
@@ -38,7 +39,9 @@ class ActorASpec extends TestKit(ActorSystem("test-system"))
 
     actorA ! IncomingMessage("bleh")
 
-    probe.expectMsg("actorB I got bleh and btw knownvalue")
+    probe.expectMsg(IncomingBMessage("actorB, I received bleh and btw knownvalue"))
   }
+
+
 
 }
